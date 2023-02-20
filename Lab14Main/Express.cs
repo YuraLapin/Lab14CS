@@ -25,6 +25,30 @@ namespace Lab14Main
             this.stationsToSkip = new List<string>(e.stationsToSkip);
         }
 
+        public override void RandomInit()
+        {
+            var sb = new StringBuilder();
+            int nameSize = 5;
+            string alphabet = "qwertyuiopasdfghjklzxcvbnm1234567890";
+            for (int i = 0; i < nameSize; ++i)
+            {
+                sb.Append(alphabet[Program.rand.Next(alphabet.Length)]);
+            }
+            name = sb.ToString();
+
+            int maxPower = 1000;
+            power = Program.rand.Next(maxPower);
+
+            int maxCars = 9;
+            cars = Program.rand.Next(maxCars);
+
+            int maxStations = 5;
+            for (int i = 0; i < Program.rand.Next(maxStations); ++i)
+            {
+                stationsToSkip.Add("station" + i);
+            }
+        }
+
         public override string ToString()
         {
             var sb = new StringBuilder();
@@ -41,7 +65,7 @@ namespace Lab14Main
             {
                 sb.Append("- ]");
             }
-            return GetType() + " " + sb.ToString();
+            return sb.ToString();
         }        
 
         public override bool Equals(object? obj)

@@ -23,11 +23,29 @@ namespace Lab14Main
         public Train(in Train t): base (t)
         {
             cars = t.cars;
-        }        
+        }
+
+        public override void RandomInit()
+        {
+            var sb = new StringBuilder();
+            int nameSize = 5;
+            string alphabet = "qwertyuiopasdfghjklzxcvbnm1234567890";
+            for (int i = 0; i < nameSize; ++i)
+            {
+                sb.Append(alphabet[Program.rand.Next(alphabet.Length)]);
+            }
+            name = sb.ToString();
+
+            int maxPower = 1000;
+            power = Program.rand.Next(maxPower);
+
+            int maxCars = 9;
+            cars = Program.rand.Next(maxCars);
+        }
 
         public override string ToString()
         {
-            return GetType() + " " + name.ToString() + ": power - " + power.ToString() + ", cars - " + cars.ToString();
+            return name.ToString() + ": power - " + power.ToString() + ", cars - " + cars.ToString();
         }        
 
         public override bool Equals(object? obj)

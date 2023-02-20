@@ -29,11 +29,26 @@ namespace Lab14Main
         {
             this.name = t.name;
             this.power = t.power;
-        }        
-        
+        }
+
+        public virtual void RandomInit()
+        {
+            var sb = new StringBuilder();
+            int nameSize = 5;
+            string alphabet = "qwertyuiopasdfghjklzxcvbnm1234567890";
+            for (int i = 0; i < nameSize; ++i)
+            {
+                sb.Append(alphabet[Program.rand.Next(alphabet.Length)]);
+            }
+            name = sb.ToString();
+
+            int maxPower = 1000;
+            power = Program.rand.Next(maxPower);
+        }
+
         public override string ToString()
         {
-            return GetType() + " " + name.ToString() + ": power - " + power.ToString();
+            return name.ToString() + ": power - " + power.ToString();
         }        
 
         public void Print()
