@@ -45,7 +45,7 @@ namespace Lab14Main
 
         public override string ToString()
         {
-            return name.ToString() + ": power - " + power.ToString() + ", cars - " + cars.ToString();
+            return "name - " + name.ToString() + ", power - " + power.ToString() + ", cars - " + cars.ToString();
         }        
 
         public override bool Equals(object? obj)

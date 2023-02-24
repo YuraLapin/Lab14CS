@@ -48,7 +48,7 @@ namespace Lab14Main
 
         public override string ToString()
         {
-            return name.ToString() + ": power - " + power.ToString();
+            return "name - " + name.ToString() + ", power - " + power.ToString();
         }        
 
         public void Print()

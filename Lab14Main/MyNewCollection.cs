@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab14Main
 {
-    internal class MyNewCollection: MyCollection
+    public class MyNewCollection: MyCollection
     {
         public string? Name
         {
@@ -17,6 +17,11 @@ namespace Lab14Main
         public delegate void CollectionHandler(CollectionHandlerEventsArgs args);
         public event CollectionHandler? CollectionCountChanged;
         public event CollectionHandler? CollectionReferenceChanged;
+
+        public MyNewCollection(): base()
+        {
+            Name = "";
+        }
 
         public MyNewCollection(string? name)
         {

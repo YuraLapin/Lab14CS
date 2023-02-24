@@ -52,7 +52,7 @@ namespace Lab14Main
         public override string ToString()
         {
             var sb = new StringBuilder();
-            sb.Append(name.ToString() + ": power - " + power.ToString() + ", cars - " + cars.ToString() + ", list of stations to skip: [ ");
+            sb.Append("name - " + name.ToString() + ", power - " + power.ToString() + ", cars - " + cars.ToString() + ", list of stations to skip: [ ");
             if (stationsToSkip.Count > 0)
             {
                 foreach (string s in stationsToSkip)

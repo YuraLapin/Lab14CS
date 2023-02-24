@@ -298,6 +298,6 @@ namespace Lab14Main
             {
                 Add(t);
             }
-        }        
+        } 
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Lab14Main
 {
-    internal class CollectionHandlerEventsArgs: System.EventArgs
+    public class CollectionHandlerEventsArgs: System.EventArgs
     {
         public string name;
         public string change;
