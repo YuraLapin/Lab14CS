@@ -281,17 +281,17 @@ namespace Lab14Main
             }            
         }
 
-        public static void OrderBy(this IEnumerable<Transport>  col)
-        {
-            if (col == null)
-            {
-                throw new ArgumentNullException();
-            }
-            else
-            {
+        //public static void OrderBy(this IEnumerable<Transport> col)
+        //{
+        //    if (col == null)
+        //    {
+        //        throw new ArgumentNullException();
+        //    }
+        //    else
+        //    {
                 
-            }
-        }        
+        //    }
+        //}        
 
         public static int Min(this IEnumerable<Transport> col)
         {
@@ -340,7 +340,16 @@ namespace Lab14Main
             Request5Ext();
 
             var coll = new MyNewCollection();
-            coll.Average();
+            coll.Add(new Transport("1", 1));            
+            coll.Add(new Train("2", 2, 2));            
+            coll.Add(new Train("3", 3, 3));
+
+            var ans = from elem in coll where elem.power <= 2 select elem.name;
+
+            foreach (string s in ans)
+            {
+                Console.WriteLine(s);
+            }
 
             return 0;
         }
