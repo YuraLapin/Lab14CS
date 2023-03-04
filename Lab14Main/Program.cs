@@ -181,7 +181,7 @@ namespace Lab14Main
             Console.WriteLine(LINE);
         }
         
-        public static IEnumerable<Transport> Select(this IEnumerable<Transport> col, Func<Transport, Transport> selector)
+        public static IEnumerable<T> Select<T>(this IEnumerable<T> col, Func<T, T> selector)
         {
             if (col == null)
             {
@@ -189,48 +189,14 @@ namespace Lab14Main
             }
             else
             {
-                var res = new MyNewCollection();
-                foreach (Transport t in col)
+                var res = new List<T>();
+                foreach (T t in col)
                 {
                     res.Add(selector(t));
                 }
                 return res;
             }            
-        }
-
-        public static IEnumerable<int> Select(this IEnumerable<Transport> col, Func<Transport, int> selector)
-        {
-            if (col == null)
-            {
-                throw new ArgumentNullException();
-            }
-            else
-            {
-                var res = new List<int>();
-                foreach (Transport t in col)
-                {
-                    res.Add(selector(t));
-                }
-                return res;
-            }
-        }
-
-        public static IEnumerable<string> Select(this IEnumerable<Transport> col, Func<Transport, string> selector)
-        {
-            if (col == null)
-            {
-                throw new ArgumentNullException();
-            }
-            else
-            {
-                var res = new List<string>();
-                foreach (Transport t in col)
-                {
-                    res.Add(selector(t));
-                }
-                return res;
-            }
-        }
+        }        
 
         public static int Average(this IEnumerable<Transport> col)
         {
@@ -281,17 +247,56 @@ namespace Lab14Main
             }            
         }
 
-        //public static void OrderBy(this IEnumerable<Transport> col)
-        //{
-        //    if (col == null)
-        //    {
-        //        throw new ArgumentNullException();
-        //    }
-        //    else
-        //    {
-                
-        //    }
-        //}        
+        public static void QuickSort(MyNewCollection col, int leftIndex, int rightIndex, Func<Transport, Transport, bool> comparator)
+        {
+            var i = leftIndex;
+            var j = rightIndex;
+            var pivot = col[leftIndex];
+
+            while (i <= j)
+            {
+                while (comparator(col[i], pivot))
+                {
+                    i++;
+                }
+
+                while (comparator(pivot, col[j]))
+                {
+                    j--;
+                }
+
+                if (i <= j)
+                {
+                    var temp = col[i];
+                    col[i] = col[j];
+                    col[j] = temp;
+                    i++;
+                    j--;
+                }
+            }
+
+            if (leftIndex < j)
+            {
+                QuickSort(col, leftIndex, j, comparator);
+            }
+
+            if (i < rightIndex)
+            {
+                QuickSort(col, i, rightIndex, comparator);
+            }
+        }
+
+        public static void OrderBy(this MyNewCollection col, Func<Transport, Transport, bool> comparator)
+        {
+            if (col == null)
+            {
+                throw new ArgumentNullException();
+            }
+            else
+            {
+                QuickSort(col, 0, col.Count() - 1, comparator);
+            }
+        }
 
         public static int Min(this IEnumerable<Transport> col)
         {
@@ -311,6 +316,35 @@ namespace Lab14Main
                 }
                 return min;
             }
+        }
+
+        public static bool Comparator(Transport t1, Transport t2)
+        {
+            return t1.power < t2.power;
+        }
+
+        public static void Demonstrate()
+        {
+            var coll = new MyNewCollection();
+            coll.Add(new Transport("Transport 1", 1));
+            coll.Add(new Train("Train 3", 3, 3));
+            coll.Add(new Train("Train 2", 2, 2));
+
+            Console.WriteLine("Моя коллекция:");
+            coll.Print();
+            Console.WriteLine(LINE);
+
+            var ans = from elem in coll where elem.power <= 2 select elem.name;
+            Console.WriteLine("Имена всех элементов с мощностью ниже или равной 2:");
+            foreach (string s in ans)
+            {
+                Console.WriteLine(s);
+            }
+            Console.WriteLine(LINE);
+
+            coll.OrderBy(Comparator);
+            Console.WriteLine("Моя коллекция после сортировки по мощности:");
+            coll.Print();
         }
 
         public static int Main()
@@ -339,17 +373,7 @@ namespace Lab14Main
 
             Request5Ext();
 
-            var coll = new MyNewCollection();
-            coll.Add(new Transport("1", 1));            
-            coll.Add(new Train("2", 2, 2));            
-            coll.Add(new Train("3", 3, 3));
-
-            var ans = from elem in coll where elem.power <= 2 select elem.name;
-
-            foreach (string s in ans)
-            {
-                Console.WriteLine(s);
-            }
+            Demonstrate();
 
             return 0;
         }
