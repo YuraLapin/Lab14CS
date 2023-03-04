@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Lab14Main
 {
-    public class Transport
+    public class Transport: ICloneable<Transport>
     {
         public string name;
         public int power;
@@ -19,43 +19,28 @@ namespace Lab14Main
             power = 0;
         }
 
-        public Transport(in string name, in int maxSpeed)
+        public Transport(string name, int maxSpeed)
         {
             this.name = name;
             this.power = maxSpeed;
         }
 
-        public Transport(in Transport t)
+        public Transport(Transport t)
         {
             this.name = t.name;
             this.power = t.power;
-        }
-
-        public virtual void RandomInit()
-        {
-            var sb = new StringBuilder();
-            int nameSize = 5;
-            string alphabet = "qwertyuiopasdfghjklzxcvbnm1234567890";
-            for (int i = 0; i < nameSize; ++i)
-            {
-                sb.Append(alphabet[Program.rand.Next(alphabet.Length)]);
-            }
-            name = sb.ToString();
-
-            int maxPower = 1000;
-            power = Program.rand.Next(maxPower);
-        }
-
+        }        
+        
         public override string ToString()
         {
-            return "name - " + name.ToString() + ", power - " + power.ToString();
+            return GetType() + " " + name.ToString() + ": power - " + power.ToString();
         }        
 
         public void Print()
         {
             Console.WriteLine(this.ToString());
-        }       
-        
+        }
+
         public override bool Equals(object? obj)
         {
             if (obj != null)
@@ -63,10 +48,20 @@ namespace Lab14Main
                 if (obj is Transport t)
                 {
                     //return Equals(this.name, t.name) && Equals(this.power, t.power);
-                    return Equals(this.ToString(), t.ToString());
+                    return string.Equals(this.name, t.name) && (this.power == t.power);
                 }
             }
             return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public virtual Transport Clone()
+        {
+            return new Transport(this);
         }
     }
 }

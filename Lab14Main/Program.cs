@@ -247,7 +247,7 @@ namespace Lab14Main
             }            
         }
 
-        public static void QuickSort(MyNewCollection col, int leftIndex, int rightIndex, Func<Transport, Transport, bool> comparator)
+        public static void QuickSort(NewCycledList<Transport> col, int leftIndex, int rightIndex, Func<Transport, Transport, bool> comparator)
         {
             var i = leftIndex;
             var j = rightIndex;
@@ -286,7 +286,7 @@ namespace Lab14Main
             }
         }
 
-        public static void OrderBy(this MyNewCollection col, Func<Transport, Transport, bool> comparator)
+        public static void OrderBy(this NewCycledList<Transport> col, Func<Transport, Transport, bool> comparator)
         {
             if (col == null)
             {
@@ -325,7 +325,7 @@ namespace Lab14Main
 
         public static void Demonstrate()
         {
-            var coll = new MyNewCollection();
+            var coll = new NewCycledList<Transport>();
             coll.Add(new Transport("Transport 1", 1));
             coll.Add(new Train("Train 3", 3, 3));
             coll.Add(new Train("Train 2", 2, 2));

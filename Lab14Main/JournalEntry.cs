@@ -8,20 +8,20 @@ namespace Lab14Main
 {
     internal class JournalEntry
     {
-        public string name;
-        public string changeType;
-        public string changed;
+        public string Name;
+        public string ChangeType;
+        public string Changed;
 
-        public JournalEntry(string name, string changeType, string changed)
+        public JournalEntry(string _name, string _changeType, string _changed)
         {
-            this.name = name;
-            this.changeType = changeType;
-            this.changed = changed;
+            Name = _name;
+            ChangeType = _changeType;
+            Changed = _changed;
         }
 
         public override string ToString()
         {
-            return "name - " + name + ", changeType - " + changeType + ", changed - " + changed;
+            return "name - " + Name + ", changeType - " + ChangeType + ", changed - " + Changed;
         }
     }
 }

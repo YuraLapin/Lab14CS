@@ -6,29 +6,29 @@ using System.Threading.Tasks;
 
 namespace Lab14Main
 {
-    public class MyNewCollection: MyCollection
+    public class NewCycledList<T>: CycledList<T>, INameable where T: ICloneable<T>, new()
     {
-        public string? Name
+        public string Name
         {
             get;
             set;
         }
 
-        public delegate void CollectionHandler(CollectionHandlerEventsArgs args);
+        public delegate void CollectionHandler(CollectionHandlerEventsArgs<T> args);
         public event CollectionHandler? CollectionCountChanged;
         public event CollectionHandler? CollectionReferenceChanged;
 
-        public MyNewCollection(): base()
+        public NewCycledList(): base()
         {
             Name = "";
         }
 
-        public MyNewCollection(string? name)
+        public NewCycledList(string _name)
         {
-            this.Name = name;
+            Name = _name;
         }
 
-        public virtual void OnCollectionCountChanged(CollectionHandlerEventsArgs args)
+        public virtual void OnCollectionCountChanged(CollectionHandlerEventsArgs<T> args)
         {
             if (CollectionCountChanged != null)
             {
@@ -36,7 +36,7 @@ namespace Lab14Main
             }
         }
 
-        public virtual void OnCollectionReferenceChanged(CollectionHandlerEventsArgs args)
+        public virtual void OnCollectionReferenceChanged(CollectionHandlerEventsArgs<T> args)
         {
             if (CollectionReferenceChanged != null)
             {
@@ -46,17 +46,17 @@ namespace Lab14Main
 
         public override bool Remove(int index)
         {
-            OnCollectionCountChanged(new CollectionHandlerEventsArgs(Name, "remove", this[index]));
+            OnCollectionCountChanged(new CollectionHandlerEventsArgs<T>(Name, "remove", this[index]));
             return base.Remove(index);
         }
 
-        public override void Add(Transport t)
-        {
-            OnCollectionCountChanged(new CollectionHandlerEventsArgs(Name, "add", t));
-            base.Add(t);
+        public override void Add(T? element)
+        {            
+            OnCollectionCountChanged(new CollectionHandlerEventsArgs<T>(Name, "add", element));
+            base.Add(element);
         }
 
-        public override Transport this[int index]
+        public override T this[int index]
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Lab14Main
             }
             set
             {
-                OnCollectionReferenceChanged(new CollectionHandlerEventsArgs(Name, "changed", value));
+                OnCollectionReferenceChanged(new CollectionHandlerEventsArgs<T>(Name, "changed", value));
                 base[index] = value;
             }
         }        
