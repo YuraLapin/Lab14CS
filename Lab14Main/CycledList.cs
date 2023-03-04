@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -38,7 +39,7 @@ namespace Lab14Main
             set;
         }
 
-        public virtual T this[int index]
+        public virtual T? this[int index]
         {
             get
             {
@@ -47,7 +48,15 @@ namespace Lab14Main
                     var curNode = Start;
                     for (int i = 0; i < index; ++i)
                     {
+                        if (curNode.Next == null || curNode.Prev == null)
+                        {
+                            return default(T);
+                        }
                         curNode = curNode.Next;
+                    }
+                    if (curNode == null)
+                    {
+                        return default(T);
                     }
                     return curNode.data;
                 }
@@ -60,11 +69,19 @@ namespace Lab14Main
                     var curNode = Start;
                     for (int i = 0; i < index; ++i)
                     {
-                        curNode = curNode.Next;
+                        if (curNode != null)
+                        {
+                            if (curNode.Next != null || curNode.Prev != null)
+                            {
+                                curNode = curNode.Next;
+                            }
+                        }                        
                     }
-                    curNode.data = value;
+                    if (curNode != null)
+                    {
+                        curNode.data = value;
+                    }
                 }
-
             }
         }
 
